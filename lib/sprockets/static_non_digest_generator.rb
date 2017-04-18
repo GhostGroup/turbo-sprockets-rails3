@@ -70,7 +70,7 @@ module Sprockets
             # Otherwise, treat file as binary and copy it.
             # Ignore paths that have no digests, such as READMEs
             unless !File.exist?(abs_digest_path) || abs_digest_path == abs_logical_path
-              unless FileUtils.compare_file(abs_digest_path, abs_logical_path)
+              unless File.exist?(abs_logical_path) && FileUtils.compare_file(abs_digest_path, abs_logical_path)
                 FileUtils.cp_r abs_digest_path, abs_logical_path, :remove_destination => true
                 env.logger.debug "Copied binary asset to #{logical_path}"
               end
